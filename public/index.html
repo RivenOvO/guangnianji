@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>公司管理系统 MVP</title>
+  <title>光年集</title>
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/vendor/ag-grid/ag-grid.css" />
   <link rel="stylesheet" href="/vendor/ag-grid/ag-theme-quartz.css" />
@@ -19,23 +19,36 @@
     </header>
 
     <main class="main">
-      <section id="loginView" class="card">
-        <h2>登录</h2>
-        <div class="grid2">
-          <label>
-            <div class="label">邮箱</div>
-            <input id="loginEmail" placeholder="admin@company.local" />
-          </label>
-          <label>
-            <div class="label">密码</div>
-            <input id="loginPassword" type="password" placeholder="admin123" />
-          </label>
+      <section id="loginView" class="card login-card">
+        <div class="login-hero">
+          <div class="login-left">
+            <div class="logo">
+              <img src="/logo-guangnianji.svg" alt="光年集" />
+            </div>
+            <h2 class="login-title">欢迎使用 光年集</h2>
+            <p class="login-sub">高级干净的内部管理工作台：公告 / 通讯录 / 日报 / 审批。</p>
+            <div class="hint">建议：首次登录后立即修改默认密码。</div>
+          </div>
+
+          <div class="login-right">
+            <h2 style="margin:0 0 10px 0;">登录</h2>
+            <div class="grid2">
+              <label>
+                <div class="label">邮箱</div>
+                <input id="loginEmail" placeholder="admin@company.local" />
+              </label>
+              <label>
+                <div class="label">密码</div>
+                <input id="loginPassword" type="password" placeholder="admin123" />
+              </label>
+            </div>
+            <div class="row">
+              <button id="loginBtn" class="btn">登录</button>
+              <div class="hint">默认账号：admin@company.local / admin123</div>
+            </div>
+            <div id="loginErr" class="error"></div>
+          </div>
         </div>
-        <div class="row">
-          <button id="loginBtn" class="btn">登录</button>
-          <div class="hint">默认账号：admin@company.local / admin123</div>
-        </div>
-        <div id="loginErr" class="error"></div>
       </section>
 
       <section id="appView" style="display:none;" class="layout">

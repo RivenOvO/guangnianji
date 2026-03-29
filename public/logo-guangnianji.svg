@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="200" viewBox="0 0 720 200" fill="none">
+  <defs>
+    <linearGradient id="g" x1="40" y1="40" x2="240" y2="180" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2563EB"/>
+      <stop offset="1" stop-color="#60A5FA"/>
+    </linearGradient>
+    <filter id="shadow" x="-20" y="-20" width="760" height="240" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#0B1220" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- mark -->
+  <g filter="url(#shadow)" transform="translate(28,30)">
+    <rect x="0" y="0" width="132" height="132" rx="28" fill="#FFFFFF"/>
+    <path d="M66 22C80 38 88 59 88 82C88 107 76 127 66 142C56 127 44 107 44 82C44 59 52 38 66 22Z" fill="url(#g)"/>
+    <path d="M66 42C74.5 55 79 67 79 82C79 98 72.5 114 66 125C59.5 114 53 98 53 82C53 67 57.5 55 66 42Z" fill="#DBEAFE" opacity="0.9"/>
+    <circle cx="66" cy="82" r="8" fill="#1D4ED8"/>
+  </g>
+
+  <!-- wordmark -->
+  <g transform="translate(190,62)">
+    <text x="0" y="62" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'PingFang SC', 'Noto Sans CJK SC'" font-size="72" font-weight="800" letter-spacing="2" fill="#0B1220">光年集</text>
+    <text x="2" y="104" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'PingFang SC', 'Noto Sans CJK SC'" font-size="16" font-weight="600" fill="#64748B">高级且干净 · 内部管理</text>
+  </g>
+</svg>
