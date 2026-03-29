@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>公司管理系统 MVP</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/vendor/ag-grid/ag-grid.css" />
+  <link rel="stylesheet" href="/vendor/ag-grid/ag-theme-quartz.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">光年集 <span class="muted">MVP</span></div>
+      <div class="topbar-right">
+        <span id="me" class="muted"></span>
+        <button id="logoutBtn" class="btn ghost" style="display:none;">退出</button>
+      </div>
+    </header>
+
+    <main class="main">
+      <section id="loginView" class="card">
+        <h2>登录</h2>
+        <div class="grid2">
+          <label>
+            <div class="label">邮箱</div>
+            <input id="loginEmail" placeholder="admin@company.local" />
+          </label>
+          <label>
+            <div class="label">密码</div>
+            <input id="loginPassword" type="password" placeholder="admin123" />
+          </label>
+        </div>
+        <div class="row">
+          <button id="loginBtn" class="btn">登录</button>
+          <div class="hint">默认账号：admin@company.local / admin123</div>
+        </div>
+        <div id="loginErr" class="error"></div>
+      </section>
+
+      <section id="appView" style="display:none;" class="layout">
+        <aside class="sidebar">
+          <button class="nav" data-tab="ann">公告</button>
+          <button class="nav" data-tab="emp">通讯录</button>
+          <button class="nav" data-tab="work">云表格（日报）</button>
+          <button class="nav" data-tab="ap">审批（请假）</button>
+          <button class="nav" data-tab="audit" id="auditTab" style="display:none;">操作日志</button>
+          <div class="spacer"></div>
+          <div class="muted small">可定制：字段���审批链、导出、权限…</div>
+        </aside>
+
+        <section class="content">
+          <div id="toast" class="toast" style="display:none;"></div>
+
+          <div id="tab-ann" class="tab">
+            <div class="tabhead">
+              <h2>公告</h2>
+              <button id="newAnnBtn" class="btn" style="display:none;">发布公告（仅我/副总）</button>
+            </div>
+            <div id="annForm" class="card" style="display:none;">
+              <div class="grid2">
+                <label>
+                  <div class="label">标题</div>
+                  <input id="annTitle" />
+                </label>
+                <label>
+                  <div class="label">内容</div>
+                  <input id="annContent" placeholder="支持多行：可后续改成富文本" />
+                </label>
+              </div>
+              <div class="row">
+                <button id="annSubmit" class="btn">提交</button>
+                <button id="annCancel" class="btn ghost">取消</button>
+              </div>
+            </div>
+            <div id="annList" class="list"></div>
+          </div>
+
+          <div id="tab-emp" class="tab" style="display:none;">
+            <div class="tabhead">
+              <h2>通讯录</h2>
+              <button id="newEmpBtn" class="btn" style="display:none;">新增员工（仅我/副总）</button>
+            </div>
+            <div id="empForm" class="card" style="display:none;">
+              <div class="grid3">
+                <label><div class="label">姓名</div><input id="empName" /></label>
+                <label><div class="label">邮箱</div><input id="empEmail" /></label>
+                <label><div class="label">岗位</div>
+                  <select id="empPosition">
+                    <option value="副总">副总</option>
+                    <option value="主管">主管</option>
+                    <option value="运营">运营</option>
+                    <option value="运营助理">运营助理</option>
+                    <option value="采购">采购</option>
+                    <option value="客服">客服</option>
+                    <option value="董事长助理">董事长助理</option>
+                    <option value="财务">财务</option>
+                    <option value="行政">行政</option>
+                  </select>
+                </label>
+                <label><div class="label">初始密码</div><input id="empPassword" placeholder="changeme123" /></label>
+                <label><div class="label">工号</div><input id="empNo" /></label>
+                <label><div class="label">部门</div><input id="empDept" /></label>
+                <label><div class="label">职位（显示名）</div><input id="empTitle" /></label>
+                <label><div class="label">电话</div><input id="empPhone" /></label>
+                <label><div class="label">入职日期</div><input id="empJoined" placeholder="2026-03-29" /></label>
+              </div>
+              <div class="row">
+                <button id="empSubmit" class="btn">提交</button>
+                <button id="empCancel" class="btn ghost">取消</button>
+              </div>
+              <div class="hint">仅 admin 可新增。后续可加：导入/导出、更多字段、离职状态等。</div>
+              <div id="empErr" class="error"></div>
+            </div>
+            <div id="empList" class="list"></div>
+          </div>
+
+          <div id="tab-work" class="tab" style="display:none;">
+            <div class="tabhead">
+              <h2>云表格（日报）</h2>
+              <div class="row">
+                <button id="workAddRow" class="btn">新增一行</button>
+                <button id="workSave" class="btn ghost">保存修改</button>
+                <button id="workRefresh" class="btn ghost">刷新</button>
+              </div>
+            </div>
+            <div class="card">
+              <div class="row">
+                <label class="inline">从 <input id="workFrom" placeholder="2026-03-01" style="width:140px" /></label>
+                <label class="inline">到 <input id="workTo" placeholder="2026-03-31" style="width:140px" /></label>
+                <span class="hint">manager/employee 仅能看到自己部门；默认最多加载 2000 行。</span>
+              </div>
+              <div id="workGrid" class="ag-theme-quartz" style="height:520px;width:100%;margin-top:10px;"></div>
+              <div class="hint" style="margin-top:10px;">操作：双击单元格编辑；支持复制粘贴；新增行后点“保存修改”。（更像 Excel 的体验）</div>
+              <div id="workErr" class="error"></div>
+            </div>
+          </div>
+
+          <div id="tab-ap" class="tab" style="display:none;">
+            <div class="tabhead">
+              <h2>审批（请假）</h2>
+              <button id="newApBtn" class="btn">发起请假</button>
+            </div>
+            <div id="apForm" class="card" style="display:none;">
+              <div class="grid3">
+                <label><div class="label">类型</div>
+                  <select id="apType">
+                    <option value="leave">leave（请假）</option>
+                  </select>
+                </label>
+                <label><div class="label">标题</div><input id="apTitle" /></label>
+                <label><div class="label">审批人（user_id）</div><input id="apAssignee" placeholder="例如 2" /></label>
+                <label><div class="label">时长/天数（可选）</div><input id="apAmount" placeholder="例如 0.5 / 1 / 2" /></label>
+                <label style="grid-column: span 2;"><div class="label">内容</div><input id="apContent" placeholder="例如：请假 2026-04-01~2026-04-02" /></label>
+              </div>
+              <div class="row">
+                <button id="apSubmit" class="btn">提交</button>
+                <button id="apCancel" class="btn ghost">取消</button>
+              </div>
+              <div class="hint">默认用“审批人 user_id”。下一步可改成：按部门主管自动流转/多级审批/抄送。</div>
+              <div id="apErr" class="error"></div>
+            </div>
+            <div class="row">
+              <label class="inline"><input type="checkbox" id="apMine" /> 只看我发起的</label>
+              <button id="apRefresh" class="btn ghost">刷新</button>
+            </div>
+            <div id="apList" class="list"></div>
+          </div>
+
+          <div id="tab-audit" class="tab" style="display:none;">
+            <div class="tabhead">
+              <h2>操作日志（最近200条）</h2>
+              <button id="auditRefresh" class="btn ghost">刷新</button>
+            </div>
+            <div id="auditList" class="list"></div>
+          </div>
+
+        </section>
+      </section>
+    </main>
+
+    <footer class="footer muted small">默认版本：Express + SQLite 单机可跑。后续可升级为多实例 + PostgreSQL + SSO。</footer>
+  </div>
+
+  <script src="/vendor/ag-grid/ag-grid-community.min.js"></script>
+  <script src="/workgrid.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
