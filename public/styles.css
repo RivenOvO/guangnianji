@@ -125,7 +125,7 @@ input:focus,select:focus{border-color:rgba(37,99,235,.45);box-shadow:0 0 0 4px r
 .logo{
   display:flex;align-items:center;gap:12px;
 }
-.logo img{height:44px;width:auto;display:block}
+.logo img{height:64px;width:auto;display:block}
 
 .login-title{font-size:22px;font-weight:900;margin:0;letter-spacing:.5px}
 .login-sub{margin:0;color:var(--muted);font-weight:600}
